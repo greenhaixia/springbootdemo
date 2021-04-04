@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.StudentMapper">
+    <resultMap id="queryAllStudent" type="com.example.springboot.entity.Student">
+        <constructor>
+            <idArg column="id" name="uid" javaType="int"></idArg>
+            <arg column="username" name="userName" javaType="string"></arg>
+            <arg column="age" name="age" javaType="int"></arg>
+            <arg column="sex" name="sex" javaType="int"></arg>
+            <arg column="address" name="address" javaType="string"></arg>
+        </constructor>
+    </resultMap>
+    <insert id="addStudent" parameterType="com.example.springboot.entity.Student">
+        INSERT INTO t_student(id, username, age, sex, address)
+        VALUES (#{uid}, #{userName}, #{age}, #{sex}, #{address})
+    </insert>
+    <select id="queryAll" resultMap="queryAllStudent">
+        SELECT id, username, age, sex, address FROM t_student
+    </select>
+    <select id="queryByUid" resultMap="queryAllStudent">
+        SELECT id, username, age, sex, address FROM t_student WHERE id = #{uid}
+    </select>
+    <update id="updateNameByUid">
+        UPDATE t_student SET username = #{userName} WHERE id = #{uid}
+    </update>
+    <delete id="deleteByUid" parameterType="int">
+        DELETE FROM t_student WHERE id = #{uid}
+    </delete>
+</mapper>
